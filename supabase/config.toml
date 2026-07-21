@@ -1,0 +1,61 @@
+# JalSheti Pro — Supabase Project Configuration
+# Blueprint §4.3: Region ap-south-1 (Mumbai), Phone OTP, Realtime, Storage
+
+project_id = "jalsheti-pro"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["https://jalsheti-pro.vercel.app/auth/callback"]
+jwt_expiry = 3600
+refresh_token_rotation_enabled = true
+refresh_token_reuse_interval = 10
+enable_signup = true
+enable_anonymous_sign_ins = false
+
+[auth.email]
+enable_signup = false
+double_confirm_changes = false
+enable_confirmations = false
+
+[auth.sms]
+enable_signup = true
+template = "Your JalSheti Pro verification code is {{ .Code }}"
+twilio_verify = false
+
+[auth.rate_limit]
+anonymous = 5
+authenticated = 30
+otp = 5
+
+[realtime]
+enabled = true
+
+[storage]
+enabled = true
+file_size_limit = "10MiB"
+
+[edge_runtime]
+enabled = true
+inspector_port = 8083
+
+# CRITICAL: ap-south-1 (Mumbai) for Maharashtra farmers
+[functions]
+enabled = true
+verify_jwt = true
