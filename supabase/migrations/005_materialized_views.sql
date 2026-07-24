@@ -36,8 +36,8 @@ SELECT
   COUNT(*) FILTER (WHERE role = 'consumer' AND subscription_status = 'trial') AS active_trials,
   COUNT(*) FILTER (WHERE role = 'supplier' AND is_active = true) AS active_suppliers,
   COALESCE(SUM(sub.amount) FILTER (WHERE sub.status = 'active'), 0) / 100.0 AS mrr_rupees,
-  COUNT(*) FILTER (WHERE role = 'consumer' AND created_at::date = CURRENT_DATE) AS new_consumers_today,
-  COUNT(*) FILTER (WHERE role = 'supplier' AND created_at::date = CURRENT_DATE) AS new_suppliers_today
+  COUNT(*) FILTER (WHERE role = 'consumer' AND u.created_at::date = CURRENT_DATE) AS new_consumers_today,
+  COUNT(*) FILTER (WHERE role = 'supplier' AND u.created_at::date = CURRENT_DATE) AS new_suppliers_today
 FROM public.users u
 LEFT JOIN public.subscriptions sub ON sub.consumer_id = u.id AND sub.status = 'active';
 

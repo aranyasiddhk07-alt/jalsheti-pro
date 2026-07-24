@@ -55,10 +55,7 @@ CREATE POLICY "Supplier sees and acknowledges consumer sessions" ON public.water
 
 CREATE POLICY "Supplier acknowledges sessions" ON public.water_sessions
   FOR UPDATE USING (supplier_id = auth.uid())
-  WITH CHECK (
-    supplier_id = auth.uid()
-    AND (OLD.supplier_acknowledged IS DISTINCT FROM NEW.supplier_acknowledged)
-  );
+  WITH CHECK (supplier_id = auth.uid());
 
 -- ===========================================================================
 -- CROP ADVISORIES
