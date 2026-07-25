@@ -11,6 +11,7 @@ import { supabase } from '../../lib/supabase';
 import { mr } from '../../i18n/marathi';
 import type { User } from '../../types';
 import { Button, Input } from '../../components';
+import DemoRoleSelector from './DemoRoleSelector';
 
 // ---------- Schemas ----------
 const phoneSchema = z.object({
@@ -42,7 +43,10 @@ type Step =
   | 'consentScreen'
   | 'roleSelect'
   | 'supplierRegister'
-  | 'consumerRegister';
+  | 'consumerRegister'
+  | 'demoRoleSelect';
+
+const DEMO_PHONE = '8669078869';
 
 export default function AuthScreen() {
   const [step, setStep] = useState<Step>('phoneEntry');
@@ -52,7 +56,7 @@ export default function AuthScreen() {
   const [role, setRole] = useState<'consumer' | 'supplier' | 'superadmin' | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { setUser } = useAppStore();
+  const { setUser, currentUser } = useAppStore();
   const navigate = useNavigate();
 
   // Phone form
@@ -103,6 +107,15 @@ export default function AuthScreen() {
     try {
       await verifyOTP(phoneNumber, data.otp);
       const profile = await getCurrentUser() as User | null;
+      
+      // Demo Mode: phone 8669078869 → show role selector
+      if (phoneNumber === DEMO_PHONE && profile) {
+        setUser(profile);
+        setStep('demoRoleSelect');
+        setLoading(false);
+        return;
+      }
+      
       if (profile && profile.name && profile.role) {
         setUser(profile);
         const dashboard = profile.role === 'superadmin' ? 'admin' : profile.role;
@@ -373,6 +386,11 @@ export default function AuthScreen() {
               {loading ? mr.loading : mr.completeRegistration}
             </Button>
           </form>
+        )}
+
+        {/* Demo Role Selector */}
+        {step === 'demoRoleSelect' && currentUser && (
+          <DemoRoleSelector phone={phoneNumber} profile={currentUser} />
         )}
       </div>
     </div>

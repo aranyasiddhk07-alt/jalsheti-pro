@@ -19,8 +19,10 @@ interface AppState {
   isOnline: boolean;
   offlineQueue: OfflineQueueItem[];
   syncStatus: "idle" | "syncing" | "error";
+  demoRole: string | null;
 
   setUser: (user: User | null) => void;
+  setDemoRole: (role: string | null) => void;
   setField: (field: Field | null) => void;
   setActiveWaterSession: (session: WaterSession | null) => void;
   startWaterTimer: () => void;
@@ -49,6 +51,7 @@ const initialState = {
   isOnline: typeof navigator !== "undefined" ? navigator.onLine : true,
   offlineQueue: [] as OfflineQueueItem[],
   syncStatus: "idle" as const,
+  demoRole: null as string | null,
 };
 
 export const useAppStore = create<AppState>()(
@@ -57,6 +60,7 @@ export const useAppStore = create<AppState>()(
       ...initialState,
 
       setUser: (user) => set({ currentUser: user }),
+      setDemoRole: (demoRole) => set({ demoRole }),
       setField: (field) => set({ currentField: field }),
 
       setActiveWaterSession: (session) =>
