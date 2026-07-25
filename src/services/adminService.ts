@@ -6,18 +6,22 @@ async function getPendingPayouts(): Promise<
 > {
   const { data, error } = await supabase
     .from("commission_wallet")
-    .select("id, supplier_id, amount, created_at, supplier_name")
+    .select("id, supplier_id, amount, created_at, users!supplier_id(name)")
     .eq("status", "pending")
     .order("created_at", { ascending: false });
 
   if (error) throw new Error(error.message);
-  return (data ?? []) as unknown as {
-    id: string;
-    supplier_id: string;
-    amount: number;
-    created_at: string;
-    supplier_name: string;
-  }[];
+  const payouts = (data ?? []).map((item: Record<string, unknown>) => {
+    const user = (item.users as unknown as { name: string }) || { name: "Unknown" };
+    return {
+      id: item.id as string,
+      supplier_id: item.supplier_id as string,
+      amount: item.amount as number,
+      created_at: item.created_at as string,
+      supplier_name: user.name,
+    };
+  });
+  return payouts;
 }
 
 async function approvePayout(
