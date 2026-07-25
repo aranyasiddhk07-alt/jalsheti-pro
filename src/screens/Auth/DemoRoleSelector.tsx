@@ -49,7 +49,7 @@ export default function DemoRoleSelector({ phone, profile }: DemoRoleSelectorPro
   };
 
   return (
-    <div className="w-full max-w-sm mx-auto space-y-4">
+    <div className="w-full max-w-sm mx-auto space-y-3 animate-fade-in">
       <div className="text-center mb-2">
         <h2 className="text-heading font-primary text-primary-700">नमस्कार, {profile.name}!</h2>
         <p className="text-label text-secondary-500 mt-1">डॅशबोर्ड निवडा</p>
@@ -59,10 +59,10 @@ export default function DemoRoleSelector({ phone, profile }: DemoRoleSelectorPro
         <button
           key={role.key}
           onClick={() => handleRoleSelect(role.key)}
-          className={`w-full text-left p-4 rounded-xl border-2 ${role.color} hover:shadow-md transition-all min-h-[80px]`}
+          className={`w-full text-left p-5 rounded-2xl border-2 ${role.color} card-hover btn-press transition-all min-h-[88px]`}
         >
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">{role.emoji}</span>
+          <div className="flex items-center gap-4">
+            <span className="text-3xl leading-none">{role.emoji}</span>
             <div>
               <span className="text-body font-primary font-semibold text-secondary-800">{role.label}</span>
               <p className="text-xs text-secondary-500 mt-0.5">{role.desc}</p>
@@ -71,7 +71,7 @@ export default function DemoRoleSelector({ phone, profile }: DemoRoleSelectorPro
         </button>
       ))}
 
-      <p className="text-xs text-secondary-400 text-center mt-4">
+      <p className="text-xs text-secondary-400 text-center mt-6">
         Demo Mode — Phone {phone}
       </p>
     </div>

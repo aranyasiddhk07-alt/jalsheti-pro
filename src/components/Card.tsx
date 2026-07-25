@@ -23,7 +23,7 @@ export function Card({ children, padding = 'md', elevation = 'shadow', className
   return (
     <div
       role="region"
-      className={clsx('rounded-xl', paddingClasses[padding], elevationClasses[elevation], className)}
+      className={clsx('rounded-xl transition-shadow', paddingClasses[padding], elevationClasses[elevation], className)}
       {...props}
     >
       {children}
