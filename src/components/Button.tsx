@@ -32,7 +32,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         aria-busy={loading}
         className={clsx(
-          'rounded-lg font-semibold font-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2',
+          'rounded-lg font-semibold font-primary transition-all focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 active:scale-[0.97]',
           variantClasses[variant],
           sizeClasses[size],
           fullWidth && 'w-full',
