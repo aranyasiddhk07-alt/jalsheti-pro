@@ -5,7 +5,7 @@ project_id = "jalsheti-pro"
 
 [api]
 enabled = true
-schemas = ["public", "graphql_public"]
+schemas = ["public"]
 
 [db]
 major_version = 15
@@ -16,6 +16,9 @@ site_url = "https://jalsheti-pro.vercel.app"
 additional_redirect_urls = ["https://jalsheti-pro.vercel.app/auth/callback"]
 jwt_expiry = 3600
 enable_signup = true
+
+[auth.email]
+enable_signup = false
 
 [auth.sms]
 enable_signup = true
